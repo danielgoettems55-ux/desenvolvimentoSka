@@ -1,0 +1,57 @@
+<!-- Todo arquivo HTML começa assim -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+  <head>
+    <!-- Metadados: não aparecem na tela -->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="calculadora/calculador.js"></script>
+
+    <title>Minha Primeira Página</title>
+  </head>
+
+ 
+    <body>
+        
+        <div class = "calculadora">
+            <div>
+                <input class = "resultado" id= "resultado" type="text">
+            </div>
+        <div class="botao">
+            <div>
+                <button onclick="adicionar('+')" class="botao">+</button>
+                <button onclick="adicionar('-')" class="botao">-</button>
+                <button onclick="adicionar('*')" class="botao">*</button>
+                <button onclick="adicionar('/')" class="botao">/</button>
+            </div>
+
+            <div>
+                <button onclick="adicionar('9')" class="botao">9</button>
+                <button onclick="adicionar('8')" class="botao">8</button>
+                <button onclick="adicionar('7')" class="botao">7</button>
+                <button onclick="limpar()" class="botao">C</button>
+            </div>
+
+            <div>
+                 <button onclick="adicionar('6')" class="botao">6</button>
+                <button onclick="adicionar('5')" class="botao">5</button>
+                <button onclick="adicionar('4')" class="botao">4</button>
+                <button onclick="adicionar('.')" class="botao">.</button>
+            </div>
+
+              <div>
+                 <button onclick="adicionar('3')" class="botao">3</button>
+                <button onclick="adicionar('2')" class="botao">2</button>
+                <button onclick="adicionar('1')" class="botao">1</button>
+                <button onclick="calcular()" class="botao">=</button>
+            </div>
+              <div>
+                 <button class="botao">0</button>
+                
+            </div>
+        </div>
+        </div>
+    </body>
+
+</html>
