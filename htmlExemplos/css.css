@@ -1,0 +1,59 @@
+  .caixa{
+        width: 200px;
+        height: 200px;
+        background-color: green;
+        border-radius: 20px;
+       }
+       .button:hover{
+        animation: crescer 1.2s ease-in-out infinite;
+        background-color: lightcoral;
+       } 
+       .button{
+        width: 100px;
+        height: 40px;
+       }
+       .caixa:hover{
+        background-color: lightcoral;
+       }
+
+       @keyframes rodarl {
+        from{transform: rotate(0deg);}
+        to{transform: rotate(90deg);}
+       }
+
+       @keyframes rodar {
+       0%{background-color: red;}
+       50%{background-color: greenyellow}
+       100%{background-color: purple}
+       
+       }
+       .animacao{
+        animation: rodar 2s linear infinite;
+       }
+
+       @keyframes crescer {
+        0%,100% { transform: scale(1); }
+        50%     { transform: scale(1.2); }
+        }
+        
+        .crescer { animation: crescer 1.2s ease-in-out infinite; }
+         @keyframes transformar {
+            100% {border-radius: 100%;}
+        }
+
+        .transformar{
+            animation: transformar 1s ease-in-out infinite; 
+        }
+
+        @keyframes mover {
+            0% {transform: translateX(0%) ;}
+            50% {transform: translateX(50%);}
+        }
+        .mover{
+            animation: mover 10s ease-in-out infinite; 
+        }
+
+
+
+
+        

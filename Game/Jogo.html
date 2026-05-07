@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <!-- Metadados: não aparecem na tela -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Jogo de Turno</title>
+  </head>
+
+  <body>
+    <div class="bordaPrincipal">
+      <div class="batalha">
+        <h1 style="width: 150px; height: 40px; margin: auto">Batalha</h1>
+      </div>
+      <div>
+        <div class="linha" style="display: inline-flex">
+          <div class="borda">
+            <img id="imgJogadorUm" class="tamanhoImagem"  src="" />
+            <div id ="NomeUm"></div>
+            <p id="JogadorUmVida">HP:</p>
+            <div class="bordaVida">
+              <div id="jogadorUmVidaPorcentagem" class="barraVida"></div>
+            </div>
+          </div>
+
+          <div class="vs">VS</div>
+
+          <div class="borda">
+            <img id="imgJogadorDois" class="tamanhoImagem" src="" />
+            <div class="vida">
+                 <div id ="NomeDois"></div>
+              <p id="JogadorDoisVida">HP:</p>
+              <div class="bordaVida">
+                <div id="jogadorDoisVidaPorcentagem" class="barraVida"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="centralizar">
+        <button id = "botaoJogar" style="width: 150px; height: 40px; margin: auto">Jogar</button>
+      </div>
+      <div id ="console" class="bordaConsole">Console</div>
+    </div>
+
+    <script src="JogoIndex.js"></script>
+
+  </body>
+</html>

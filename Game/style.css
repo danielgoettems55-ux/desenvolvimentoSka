@@ -1,0 +1,77 @@
+.borda{
+    border: 0px solid black;
+
+}
+
+.centralizar{
+   display: flex;
+ 
+}
+
+.bordaPrincipal{
+    margin: auto;
+    border: 2px dashed red;
+    width: 500px;
+    height: 500px;
+}
+.bordaConsole{
+    border: 2px dashed red;
+    height: 200px;
+    background-color: black ;
+    color: aliceblue;
+    text-align: center;
+    overflow: auto;
+    
+}
+
+.calculadora{
+     border: 2px dashed red;
+    width: 500px;
+    height: 500px;
+}
+
+
+.resultado{
+    
+    width: 50%;
+    height: 30px;
+    font-size: 20px;
+    text-align: right;
+    margin: 5px;
+}
+.botao button{
+  border-radius: 12px;
+    width: 40px; 
+    height: 40px;
+    background-color: lightgray;
+    margin: 5px;
+}
+
+.vs{
+margin: auto;
+padding: 14px;
+}
+
+body{
+    display: flex;
+}
+
+.vida{
+    
+    width: 100%;
+
+}
+.barraVida{
+    width: 85%;
+    height: 10px;
+    background-color: red;
+}
+.bordaVida{
+    border: 1px solid black;
+    width: 150px;
+
+}
+.tamanhoImagem{
+    height: 200px;
+    width: 200px;
+}
