@@ -9,14 +9,16 @@
 }
 
 .bordaPrincipal{
+     background-color: rgb(192, 192, 209);
     margin: auto;
-    border: 2px dashed red;
-    width: 500px;
-    height: 500px;
+    border: 5px solid rgb(0, 0, 0);
+    width: 800px;
+    height: 700px;
 }
 .bordaConsole{
-    border: 2px dashed red;
-    height: 200px;
+
+    border: 5px solid rgb(0, 0, 0);
+    height: 330px;
     background-color: black ;
     color: aliceblue;
     text-align: center;
@@ -48,8 +50,8 @@
 }
 
 .vs{
-margin: auto;
-padding: 14px;
+    width: 10px;
+    height: 10px;
 }
 
 body{
@@ -62,16 +64,75 @@ body{
 
 }
 .barraVida{
+    border-radius: 10px;
     width: 85%;
-    height: 10px;
+    height: 20px;
     background-color: red;
+    transition: width 0.5s ease-in-out;
 }
+
 .bordaVida{
     border: 1px solid black;
-    width: 150px;
+    border-radius: 10px;
+    width: 200px;
 
 }
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.2); }
+}
+
+.dano{
+    animation: pulse 0.8s ease-in-out infinite
+}
+
+
 .tamanhoImagem{
     height: 200px;
     width: 200px;
 }
+
+.espacamento{
+     display: flex;
+  justify-content: center; /* centraliza */
+  align-items: center;
+  gap: 175px;
+}
+
+
+.botao{
+    margin:auto;  
+    height: 70px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;   
+   
+}
+.borda-principal{
+    background-color: rgb(192, 192, 209);
+    margin: auto;
+    border: 2px dashed red;
+    width: 500px;
+    height: 500px;
+    
+}
+
+.texto{
+    font-size: xx-large;
+    text-align: center;
+}
+.div-superior {
+  margin-bottom: 150px; /* Cria 20px de espaço abaixo */
+}
+.div1{
+    margin-bottom: 60px;
+}
+
+label{
+font-family: Impact, sans-serif;
+font-weight: 600; /* semibold */
+}
+

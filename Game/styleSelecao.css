@@ -1,0 +1,34 @@
+.botao{
+    margin:auto;  
+    height: 70px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;   
+   
+}
+.borda-principal{
+    background-color: rgb(192, 192, 209);
+    margin: auto;
+    border: 2px dashed red;
+    width: 500px;
+    height: 500px;
+    
+}
+
+.texto{
+    font-size: xx-large;
+    text-align: center;
+}
+.div-superior {
+  margin-bottom: 150px; /* Cria 20px de espaço abaixo */
+}
+.div1{
+    margin-bottom: 60px;
+}
+
+label{
+font-family: Impact, sans-serif;
+font-weight: 600; /* semibold */
+}
