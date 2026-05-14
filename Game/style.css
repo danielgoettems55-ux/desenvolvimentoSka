@@ -88,9 +88,6 @@ body{
   align-items: center;
 }
 
-
-
-
 .texto{
     font-size: xx-large;
     text-align: center;
@@ -98,7 +95,7 @@ body{
 .div-superior {
   margin-bottom: 150px; /* Cria 20px de espaço abaixo */
 }
-.div1{
+.margem{
     margin-bottom: 60px;
 }
 
