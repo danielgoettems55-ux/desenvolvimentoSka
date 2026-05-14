@@ -9,7 +9,7 @@
   </head>
 
   <body style="background-color: rgb(53, 53, 53)">
-    <div class="borda-principal" id="selecao">
+    <div class="bordaPrincipal" id="selecao">
       <div class="texto div1">
         <label> Escolha os personagens </label>
       </div>
@@ -25,18 +25,18 @@
         <input type="radio" name="play2" value="2" /> Guerreiro
       </div>
       <div>
-        <button id="jogar" class="botao">Jogar</button>
+        <button id="jogar" class="botao-rpg">Jogar</button>
       </div>
     </div>
 
     <div class="bordaPrincipal" id="game">
       <div class="batalha">
-        <h1 style="width: 150px; height: 40px; margin: auto">Batalha</h1>
+        <h1>Batalha</h1>
       </div>
       <div>
         <div class="linha espacamento" style="display: inline-flex">
-          <div class="borda">
-            <img id="imgJogadorUm" class="tamanhoImagem " src="" />
+          <div class="borda" id="borda-playerum">
+            <img id="imgJogadorUm" class="tamanhoImagem personagem" src="" />
             <div id="NomeUm"></div>
             <p id="JogadorUmVida">HP:</p>
             <div class="bordaVida">
@@ -44,11 +44,11 @@
             </div>
           </div>
 
-          <div class="vs">
-            <img src="./public/vs.png">
+          <div>
+            <img class="vs" src="./public/vs.png" />
           </div>
 
-          <div class="borda">
+          <div class="borda" id="borda-playerdois">
             <img id="imgJogadorDois" class="tamanhoImagem" src="" />
             <div class="vida">
               <div id="NomeDois"></div>

@@ -13,10 +13,10 @@ export class TrocadePersonagem {
     );
 
     if (selected?.value == "1") {
-      return (this.player1 = new Mago("Mago", 500, 20, 30));
+      return (this.player1 = new Mago("Mago", 500, 20, 100));
     }
     if (selected?.value == "2") {
-      return (this.player1 = new Assasino("Assasino", 500, 10, 15, 15));
+      return (this.player1 = new Assasino("Assasino", 500, 10, 15, 15, 10));
     }
     throw new Error("Selecione um personagem para Player 1");
   }
@@ -29,26 +29,23 @@ export class TrocadePersonagem {
       return (this.player2 = new Mago("Mago", 500, 20, 30));
     }
     if (selected?.value == "2") {
-      return (this.player2 = new Assasino("Assasino", 500, 10, 15, 15));
+      return (this.player2 = new Assasino("Assasino", 600, 10, 15, 15, 10));
     }
     throw new Error("Selecione um personagem para Player 2");
   }
 }
-
 
 function construirJogo() {
   const troca = new TrocadePersonagem();
   let playerUm = troca.trocarPlayer1();
   let playerDois = troca.trocarPlayer2();
 
-
-  ((document.getElementById("selecao")) as HTMLElement ).style.display = "none";
-   ((document.getElementById("game")) as HTMLElement ).style.display = "block";
+  (document.getElementById("selecao") as HTMLElement).style.display = "none";
+  (document.getElementById("game") as HTMLElement).style.display = "block";
 
   let jogo: Jogo = new Jogo();
   jogo.inicia(playerUm, playerDois);
-
 }
 
- ((document.getElementById("game")) as HTMLElement ).style.display = "none";
+(document.getElementById("game") as HTMLElement).style.display = "none";
 document.getElementById("jogar")?.addEventListener("click", construirJogo);

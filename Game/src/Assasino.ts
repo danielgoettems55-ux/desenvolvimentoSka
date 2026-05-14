@@ -1,13 +1,14 @@
 import { Personagem } from "./Personagem";
 export class Assasino extends Personagem {
   veneno: number = 0;
-
+  buff_furia: number = 0;
   constructor(
     nome: string,
     vida: number,
     dano: number,
     regen: number,
     veneno: number,
+    buff_furia: number,
   ) {
     super(
       nome,
@@ -15,8 +16,10 @@ export class Assasino extends Personagem {
       dano,
       regen,
       "./public/assasino.PNG",
+      "./public/assasinoMegaEvo.PNG",
     );
     this.veneno = veneno;
+    this.buff_furia = buff_furia;
   }
   /*public atacar(persona: Personagem): void {
         this.dano = this.verificarAtaque(this.gerarAtaque());
@@ -28,26 +31,49 @@ export class Assasino extends Personagem {
   public atacar(persona: Personagem): void {
     let ataque_base = this.dano;
     let dado = this.gerarAtaque();
-    let msg: string = "feitiço base";
+    let msg: string = "Ataque Base";
 
-    switch (dado) {
-      case 1:
-        ataque_base += 30;
-        msg = "Machado";
-        break;
+    if (this.vida < 100) {
+      switch (dado) {
+        case 1:
+          ataque_base += 30;
+          ataque_base += this.buff_furia;
+          msg = "Ataque Enfurecido de Machado";
+          break;
 
-      case 2:
-        ataque_base += 40;
-        msg = "Maça";
-        break;
+        case 2:
+          ataque_base += 40;
+          msg = "Ataque Enfurecido de Maça";
+          break;
 
-      case 3:
-        ataque_base += 50;
-        msg = "Bazuca";
-        break;
+        case 3:
+          ataque_base += 50;
+          msg = "Ataque Enfurecido de Bazuca";
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
+    } else {
+      switch (dado) {
+        case 1:
+          ataque_base += 30;
+          msg = "Machado";
+          break;
+
+        case 2:
+          ataque_base += 40;
+          msg = "Maça";
+          break;
+
+        case 3:
+          ataque_base += 50;
+          msg = "Bazuca";
+          break;
+
+        default:
+          break;
+      }
     }
     this.log(
       "O " +
@@ -69,6 +95,6 @@ export class Assasino extends Personagem {
   }
 
   override sofrerAtaque(dano: number): void {
-    this.vida = this.vida - this.defesa(dano);
+    this.vida = Math.max(0, this.vida - this.defesa(dano));
   }
 }

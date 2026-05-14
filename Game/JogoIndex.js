@@ -2,7 +2,7 @@
 (() => {
   // src/Personagem.ts
   var Personagem = class {
-    constructor(nome, vida, dano, regen, imagem) {
+    constructor(nome, vida, dano, regen, imagem, megaImg) {
       this.nome = "Personagem";
       this.vida = 0;
       this.vidaMaxima = 0;
@@ -10,18 +10,22 @@
       this.regen = 0;
       this.jaUsouCura = false;
       this.imagem = "";
+      this.megaImg = "";
+      this.jaMegaEvoluiu = false;
+      this.imgMorte = "./public/morte.PNG";
       this.nome = nome;
       this.vida = vida;
       this.dano = dano;
       this.regen = regen;
       this.imagem = imagem;
       this.vidaMaxima = vida;
+      this.megaImg = megaImg;
     }
     isVivo() {
       return this.vida > 0;
     }
     sofrerAtaque(dano) {
-      this.vida = this.vida - dano;
+      this.vida = Math.max(0, this.vida - dano);
     }
     recuperarVida() {
       this.vida = this.vida + this.regen;
@@ -36,39 +40,64 @@
     getImg() {
       return this.imagem;
     }
+    setImg(image) {
+      this.imagem = image;
+    }
+    morto() {
+      this.setImg(this.imgMorte);
+    }
     gerarAtaque() {
       let maximoAtk = 4;
       return Math.floor(Math.random() * maximoAtk);
     }
-    verificarAtaque(ataque) {
-      if (ataque == 0) {
-        return 15;
-      } else if (ataque == 1) {
-        return 20;
-      } else {
-        return 30;
+    podeCurar() {
+      return !this.jaUsouCura;
+    }
+    podeMegaEvoluir() {
+      return !this.jaMegaEvoluiu;
+    }
+    gerarNumeroMegaEvolucao() {
+      let maximoNum = 20;
+      return Math.floor(Math.random() * maximoNum);
+    }
+    //Mexi aqui
+    megaEvolucao(vida, dano, vidaMax) {
+      let numero_aleatorio = this.gerarNumeroMegaEvolucao();
+      if (numero_aleatorio == 3) {
+        this.setImg(this.megaImg);
+        this.alterarStatusMegaEvo(vida, dano, vidaMax);
+        this.megaEvoluiu("game");
+        this.jaMegaEvoluiu = true;
       }
     }
-    podeCurar() {
-      return !this.jaUsouCura && this.vida < 50;
+    alterarStatusMegaEvo(vida, dano, vidaMax) {
+      this.vida = vida;
+      this.dano = dano;
+      this.vidaMaxima = vidaMax;
     }
     log(mensagem) {
       document.getElementById("console").innerHTML += "<p>" + mensagem + "<p>";
+    }
+    megaEvoluiu(id) {
+      document.getElementById(id).classList.add("mega-evolui");
     }
   };
 
   // src/Assasino.ts
   var Assasino = class extends Personagem {
-    constructor(nome, vida, dano, regen, veneno) {
+    constructor(nome, vida, dano, regen, veneno, buff_furia) {
       super(
         nome,
         vida,
         dano,
         regen,
-        "./public/assasino.PNG"
+        "./public/assasino.PNG",
+        "./public/assasinoMegaEvo.PNG"
       );
       this.veneno = 0;
+      this.buff_furia = 0;
       this.veneno = veneno;
+      this.buff_furia = buff_furia;
     }
     /*public atacar(persona: Personagem): void {
           this.dano = this.verificarAtaque(this.gerarAtaque());
@@ -79,22 +108,42 @@
     atacar(persona) {
       let ataque_base = this.dano;
       let dado = this.gerarAtaque();
-      let msg = "feiti\xE7o base";
-      switch (dado) {
-        case 1:
-          ataque_base += 30;
-          msg = "Machado";
-          break;
-        case 2:
-          ataque_base += 40;
-          msg = "Ma\xE7a";
-          break;
-        case 3:
-          ataque_base += 50;
-          msg = "Bazuca";
-          break;
-        default:
-          break;
+      let msg = "Ataque Base";
+      if (this.vida < 100) {
+        switch (dado) {
+          case 1:
+            ataque_base += 30;
+            ataque_base += this.buff_furia;
+            msg = "Ataque Enfurecido de Machado";
+            break;
+          case 2:
+            ataque_base += 40;
+            msg = "Ataque Enfurecido de Ma\xE7a";
+            break;
+          case 3:
+            ataque_base += 50;
+            msg = "Ataque Enfurecido de Bazuca";
+            break;
+          default:
+            break;
+        }
+      } else {
+        switch (dado) {
+          case 1:
+            ataque_base += 30;
+            msg = "Machado";
+            break;
+          case 2:
+            ataque_base += 40;
+            msg = "Ma\xE7a";
+            break;
+          case 3:
+            ataque_base += 50;
+            msg = "Bazuca";
+            break;
+          default:
+            break;
+        }
       }
       this.log(
         "O " + this.nome + " atacou o " + persona.nome + " com " + msg + " e causou " + (ataque_base + this.veneno) + " de dano\n "
@@ -106,7 +155,7 @@
       return dano * 90 / 100;
     }
     sofrerAtaque(dano) {
-      this.vida = this.vida - this.defesa(dano);
+      this.vida = Math.max(0, this.vida - this.defesa(dano));
     }
   };
 
@@ -118,7 +167,8 @@
         vida,
         dano,
         regen,
-        "./public/mago.PNG"
+        "./public/mago.PNG",
+        "./public/magoMegaEvo.PNG"
       );
     }
     /* public atacar(persona: Personagem): void {
@@ -133,18 +183,19 @@
       let msg = "feiti\xE7o base";
       switch (dado) {
         case 1:
-          ataque_base += 20;
-          msg = "bola de fogo";
+          ataque_base += 35;
+          msg = "Bola de Fogo";
           break;
         case 2:
-          ataque_base += 30;
-          msg = "ralampago";
+          ataque_base += 40;
+          msg = "Rel\xE2mpago";
           break;
         case 3:
           ataque_base += 50;
           msg = "Decaimento";
           break;
         default:
+          msg = "Ataque Base";
           break;
       }
       this.log(
@@ -161,15 +212,17 @@
       let turno = 1;
       this.atualizarInterface(player1, player2);
       while (player1.isVivo() && player2.isVivo()) {
-        if (player1.getVida() < 50 && player1.podeCurar()) {
+        if (player1.getVida() < 100 && player1.podeCurar()) {
           player1.recuperarVida();
           this.atualizarInterface(player1, player2);
+          await this.esperaTempo();
         }
-        if (player2.getVida() < 50 && player2.podeCurar()) {
+        if (player2.getVida() < 100 && player2.podeCurar()) {
           player2.recuperarVida();
           this.atualizarInterface(player1, player2);
+          await this.esperaTempo();
         }
-        player1.log("\n===========Turno : " + turno + "===========");
+        player1.log("\n<{===========Turno : " + turno + "===========}>");
         player1.atacar(player2);
         this.tomouDano("imgJogadorDois");
         this.atualizarInterface(player1, player2);
@@ -179,14 +232,42 @@
           break;
         }
         player2.atacar(player1);
+        this.tomouDano("imgJogadorUm");
+        this.atualizarInterface(player1, player2);
+        await this.esperaTempo();
+        this.limpaDano("imgJogadorUm");
+        if (player1.nome == "Mago") {
+          if (player1.podeMegaEvoluir()) {
+            player1.megaEvolucao(600, 30, 600);
+          }
+        } else {
+          if (player1.podeMegaEvoluir()) {
+            player1.megaEvolucao(700, 25, 700);
+          }
+        }
+        if (player2.nome == "Mago") {
+          if (player2.podeMegaEvoluir()) {
+            player2.megaEvolucao(600, 30, 600);
+            this.atualizarInterface(player1, player2);
+          }
+        } else {
+          if (player2.podeMegaEvoluir()) {
+            player2.megaEvolucao(700, 25, 700);
+            this.atualizarInterface(player1, player2);
+          }
+        }
         this.atualizarInterface(player1, player2);
         await this.esperaTempo();
         turno++;
       }
       if (player1.isVivo()) {
+        player2.morto();
+        this.atualizarInterface(player1, player2);
         player1.log(player1.nome + " Ganhou a luta");
       }
       if (player2.isVivo()) {
+        player1.morto();
+        this.atualizarInterface(player1, player2);
         player1.log(player2.nome + " Ganhou a luta");
       }
     }
@@ -210,6 +291,10 @@
         "jogadorUmVidaPorcentagem"
       );
       divBarraVida.style.width = jogadorUm.getVida() * 100 / jogadorUm.vidaMaxima + "%";
+      let divBarraVidaDois = this.buscaComponenteHtml(
+        "jogadorDoisVidaPorcentagem"
+      );
+      divBarraVidaDois.style.width = jogadorDois.getVida() * 100 / jogadorDois.vidaMaxima + "%";
     }
     esperaTempo() {
       const milesegundos = 800;
@@ -224,10 +309,10 @@
         'input[name="play1"]:checked'
       );
       if (selected?.value == "1") {
-        return this.player1 = new Mago("Mago", 500, 20, 30);
+        return this.player1 = new Mago("Mago", 500, 20, 100);
       }
       if (selected?.value == "2") {
-        return this.player1 = new Assasino("Assasino", 500, 10, 15, 15);
+        return this.player1 = new Assasino("Assasino", 500, 10, 15, 15, 10);
       }
       throw new Error("Selecione um personagem para Player 1");
     }
@@ -239,7 +324,7 @@
         return this.player2 = new Mago("Mago", 500, 20, 30);
       }
       if (selected?.value == "2") {
-        return this.player2 = new Assasino("Assasino", 500, 10, 15, 15);
+        return this.player2 = new Assasino("Assasino", 600, 10, 15, 15, 10);
       }
       throw new Error("Selecione um personagem para Player 2");
     }

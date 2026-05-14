@@ -8,6 +8,7 @@ export class Mago extends Personagem {
       dano,
       regen,
       "./public/mago.PNG",
+      "./public/magoMegaEvo.PNG",
     );
   }
   /* public atacar(persona: Personagem): void {
@@ -24,13 +25,13 @@ export class Mago extends Personagem {
 
     switch (dado) {
       case 1:
-        ataque_base += 20;
-        msg = "bola de fogo";
+        ataque_base += 35;
+        msg = "Bola de Fogo";
         break;
 
       case 2:
-        ataque_base += 30;
-        msg = "ralampago";
+        ataque_base += 40;
+        msg = "Relâmpago";
         break;
 
       case 3:
@@ -39,6 +40,7 @@ export class Mago extends Personagem {
         break;
 
       default:
+        msg = "Ataque Base";
         break;
     }
     this.log(

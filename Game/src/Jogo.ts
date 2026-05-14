@@ -8,17 +8,19 @@ export class Jogo {
     this.atualizarInterface(player1, player2);
 
     while (player1.isVivo() && player2.isVivo()) {
-      if (player1.getVida() < 50 && player1.podeCurar()) {
+      if (player1.getVida() < 100 && player1.podeCurar()) {
         player1.recuperarVida();
         this.atualizarInterface(player1, player2);
+        await this.esperaTempo();
       }
 
-      if (player2.getVida() < 50 && player2.podeCurar()) {
+      if (player2.getVida() < 100 && player2.podeCurar()) {
         player2.recuperarVida();
         this.atualizarInterface(player1, player2);
+        await this.esperaTempo();
       }
       //*********************************************************************************************************//
-      player1.log("\n===========Turno : " + turno + "===========");
+      player1.log("\n<{===========Turno : " + turno + "===========}>");
 
       player1.atacar(player2);
       this.tomouDano("imgJogadorDois");
@@ -33,27 +35,58 @@ export class Jogo {
       this.tomouDano("imgJogadorUm");
       this.atualizarInterface(player1, player2);
       await this.esperaTempo();
+      this.limpaDano("imgJogadorUm");
+
+      if (player1.nome == "Mago") {
+        if (player1.podeMegaEvoluir()) {
+          player1.megaEvolucao(600, 30, 600);
+        }
+      } else {
+        if (player1.podeMegaEvoluir()) {
+          player1.megaEvolucao(700, 25, 700);
+        }
+      }
+
+      if (player2.nome == "Mago") {
+        if (player2.podeMegaEvoluir()) {
+          player2.megaEvolucao(600, 30, 600);
+          this.atualizarInterface(player1, player2);
+        }
+      } else {
+        if (player2.podeMegaEvoluir()) {
+          player2.megaEvolucao(700, 25, 700);
+          this.atualizarInterface(player1, player2);
+        }
+      }
+
+      this.atualizarInterface(player1, player2);
+      await this.esperaTempo();
       turno++;
-      this.limpaDano("imgJogadorDois");
     }
 
     if (player1.isVivo()) {
+      player2.morto();
+      this.atualizarInterface(player1, player2);
       player1.log(player1.nome + " Ganhou a luta");
     }
 
     if (player2.isVivo()) {
+      player1.morto();
+      this.atualizarInterface(player1, player2);
       player1.log(player2.nome + " Ganhou a luta");
     }
   }
+
   buscaComponenteHtml(id: string) {
     return document.getElementById(id);
   }
 
-  public tomouDano(id:string){
-    (document.getElementById(id) as HTMLElement).classList = "tamanhoImagem dano";
+  public tomouDano(id: string) {
+    (document.getElementById(id) as HTMLElement).classList =
+      "tamanhoImagem dano";
   }
 
-   public limpaDano(id:string){
+  public limpaDano(id: string) {
     (document.getElementById(id) as HTMLElement).classList = "tamanhoImagem";
   }
 
@@ -74,9 +107,16 @@ export class Jogo {
     let divBarraVida = this.buscaComponenteHtml(
       "jogadorUmVidaPorcentagem",
     ) as HTMLElement;
-    
+
     divBarraVida.style.width =
       (jogadorUm.getVida() * 100) / jogadorUm.vidaMaxima + "%";
+
+    let divBarraVidaDois = this.buscaComponenteHtml(
+      "jogadorDoisVidaPorcentagem",
+    ) as HTMLElement;
+
+    divBarraVidaDois.style.width =
+      (jogadorDois.getVida() * 100) / jogadorDois.vidaMaxima + "%";
   }
   public esperaTempo() {
     const milesegundos = 800;

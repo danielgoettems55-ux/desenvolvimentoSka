@@ -6,12 +6,16 @@ export abstract class Personagem {
   protected regen: number = 0;
   private jaUsouCura: boolean = false;
   protected imagem: string = "";
+  protected megaImg: string = "";
+  private jaMegaEvoluiu: boolean = false;
+  protected imgMorte = "./public/morte.PNG";
   constructor(
     nome: string,
     vida: number,
     dano: number,
     regen: number,
     imagem: string,
+    megaImg: string,
   ) {
     this.nome = nome;
     this.vida = vida;
@@ -19,6 +23,7 @@ export abstract class Personagem {
     this.regen = regen;
     this.imagem = imagem;
     this.vidaMaxima = vida;
+    this.megaImg = megaImg;
   }
 
   isVivo(): boolean {
@@ -27,7 +32,7 @@ export abstract class Personagem {
   public abstract atacar(persona: Personagem): void;
 
   sofrerAtaque(dano: number): void {
-    this.vida = this.vida - dano;
+    this.vida = Math.max(0, this.vida - dano);
   }
   public recuperarVida(): void {
     this.vida = this.vida + this.regen;
@@ -46,26 +51,55 @@ export abstract class Personagem {
     return this.imagem;
   }
 
+  public setImg(image: string) {
+    this.imagem = image;
+  }
+
+  public morto() {
+    this.setImg(this.imgMorte);
+  }
+
   gerarAtaque(): number {
     let maximoAtk = 4;
     return Math.floor(Math.random() * maximoAtk);
   }
 
-  verificarAtaque(ataque: number): number {
-    if (ataque == 0) {
-      return 15;
-    } else if (ataque == 1) {
-      return 20;
-    } else {
-      return 30;
+  public podeCurar() {
+    return !this.jaUsouCura;
+  }
+
+  public podeMegaEvoluir() {
+    return !this.jaMegaEvoluiu;
+  }
+
+  public gerarNumeroMegaEvolucao() {
+    let maximoNum = 20;
+    return Math.floor(Math.random() * maximoNum);
+  }
+  //Mexi aqui
+  public megaEvolucao(vida: number, dano: number, vidaMax: number) {
+    let numero_aleatorio = this.gerarNumeroMegaEvolucao();
+
+    if (numero_aleatorio == 3) {
+      // this.megaEvoluiu("mega-evolui");
+      this.setImg(this.megaImg);
+      this.alterarStatusMegaEvo(vida, dano, vidaMax);
+      this.megaEvoluiu("game");
+      this.jaMegaEvoluiu = true;
     }
   }
 
-  public podeCurar() {
-    return !this.jaUsouCura && this.vida < 50;
+  public alterarStatusMegaEvo(vida: number, dano: number, vidaMax: number) {
+    this.vida = vida;
+    this.dano = dano;
+    this.vidaMaxima = vidaMax;
   }
 
   public log(mensagem: string) {
     document.getElementById("console")!.innerHTML += "<p>" + mensagem + "<p>";
+  }
+
+  public megaEvoluiu(id: string) {
+    (document.getElementById(id) as HTMLElement).classList.add("mega-evolui");
   }
 }
