@@ -76,12 +76,11 @@ export abstract class Personagem {
     let maximoNum = 20;
     return Math.floor(Math.random() * maximoNum);
   }
-  //Mexi aqui
+ 
   public megaEvolucao(vida: number, dano: number, vidaMax: number) {
     let numero_aleatorio = this.gerarNumeroMegaEvolucao();
 
     if (numero_aleatorio == 3) {
-      // this.megaEvoluiu("mega-evolui");
       this.setImg(this.megaImg);
       this.alterarStatusMegaEvo(vida, dano, vidaMax);
       this.megaEvoluiu("game");

@@ -72,8 +72,7 @@ export class Jogo {
 
     if (player2.isVivo()) {
       player1.morto();
-      this.atualizarInterface(player1, player2);
-      player1.log(player2.nome + " Ganhou a luta");
+      this.atualizarInterface(player1, player2);      player1.log(player2.nome + " Ganhou a luta");
     }
   }
 
